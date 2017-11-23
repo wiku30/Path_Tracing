@@ -1,0 +1,5 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (ray.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  bezier.cpp
+w:\大三上\图形学\ray\ray\ray\bezier.cpp(31): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  ray.vcxproj -> W:\大三上\图形学\ray\ray\x64\Debug\raytrace.exe
+  ray.vcxproj -> W:\大三上\图形学\ray\ray\x64\Debug\raytrace.pdb (Full PDB)
