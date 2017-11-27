@@ -149,12 +149,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ball.cpp" />
     <ClCompile Include="bezier.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="types.cpp" />
     <ClCompile Include="poly.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ball.h" />
     <ClInclude Include="bezier.h" />
     <ClInclude Include="heart.h" />
     <ClInclude Include="poly.h" />

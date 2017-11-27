@@ -14,5 +14,5 @@ public:
 	poly(cmp x0, cmp x1, cmp x2, cmp x3);
 	friend poly operator + (const poly&, const poly&);
 	friend poly operator * (const poly&, const poly&);
-	int solve(vector < cmp >&);
+	//int solve(vector < cmp >&);
 };
