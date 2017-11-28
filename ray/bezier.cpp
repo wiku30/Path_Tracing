@@ -28,7 +28,7 @@ vec3 findPoint(const vector<vec3> points, double place)
 	if (!init_flag)
 		init();
 	vec3 res(0,0,0);
-	int n = points.size() - 1;
+	int n = (int)points.size() - 1;
 	for (int i = 0; i <= n; i++)
 	{
 		res.x += points[i].x * C[n][i] * pow(place, i) * pow(1 - place, n-i);
@@ -40,5 +40,6 @@ vec3 findPoint(const vector<vec3> points, double place)
 
 double findCross2D(const vector<vec3>& points, const ray& cast)
 {
-	
+	//TODO: implement findCross2D
+	return 0;
 }

@@ -3,11 +3,14 @@
 
 class ball : public random_shape
 {
+protected:
 	vec3 center;
 	double radius;
 public:
+	ball(){}
 	ball(vec3 center_, double radius_);
-	bool ifcross(ray in);
-	vec3 findcross(ray in);
-	vec3 normal(ray in);
+	const bool ifcross(const ray& in);
+	const vec3 findcross(const ray& in, double *pt = &dummyF, int *po = &dummyI);
+	const vec3 getnormal(const ray& in);
+	const TYPE type() { return BALL; }
 };

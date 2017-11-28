@@ -2,26 +2,28 @@
 #include <opencv2/core/core.hpp>  
 #include <opencv2/highgui/highgui.hpp>  
 
-#include "types.h"
-#include "bezier.h"
+
 #include <iostream>
 #include <vector>
+
+#include "types.h"
+#include "bezier.h"
+#include "ball.h"
+#include "triangle.h"
 
 using namespace std;
 
 using namespace cv;
 
 int main() {
-	vec3 a(0, 0, 0);
-	vec3 b(0, 1, 0);
-	vec3 c(1, 1, 0);
-	vector<vec3> bez;
-	bez.push_back(a);
-	bez.push_back(b);
-	bez.push_back(c);
-	cout << findPoint(bez,0) << endl;
-	cout << findPoint(bez, 0.5) << endl;
-	cout << findPoint(bez, 1) << endl;
+
+	vec3 A(0,0,0), B(1,0,0), C(0,1,0), D(0,0,1);
+	triangle T(A, B, C);
+	ray i,r;
+	i.setstart(0, 0, 1);
+	i.setdirec(1, 1, -2);
+	r=T.reflect(i);
+	cout << r.start << endl << r.direc << endl;
 	/*
 	// 读入一张图片（游戏原画）    
 	Mat img = imread("pic.jpg");

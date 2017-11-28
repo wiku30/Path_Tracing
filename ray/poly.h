@@ -1,5 +1,6 @@
-#include <cmath>
 #pragma once
+
+#include <cmath>
 #include <complex>
 #include <vector>
 

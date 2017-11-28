@@ -152,6 +152,7 @@
     <ClCompile Include="ball.cpp" />
     <ClCompile Include="bezier.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="triangle.cpp" />
     <ClCompile Include="types.cpp" />
     <ClCompile Include="poly.cpp" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="bezier.h" />
     <ClInclude Include="heart.h" />
     <ClInclude Include="poly.h" />
+    <ClInclude Include="triangle.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

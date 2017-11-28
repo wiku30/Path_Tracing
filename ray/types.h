@@ -5,8 +5,51 @@
 #include <math.h>
 #include <iostream>
 
+#define TYPE int
+#define BALL 1
+#define TRIANGLE 2
 
-typedef cv::Point3d vec3;
+static double dummyF;
+static int dummyI;
+
+inline bool ISNAN(double x)
+{
+	return x != x;
+}
+
+class vec3 : public cv::Point3d
+{
+public:
+	vec3() {}
+	vec3(const cv::Point3d &p)
+	{
+		x = p.x;
+		y = p.y;
+		z = p.z;
+	}
+	vec3(double x_, double y_, double z_)
+	{
+		x = x_;
+		y = y_;
+		z = z_;
+	}
+	const double abs() const
+	{
+		return sqrt(dot(*this));
+	}
+	const double proj_t(const vec3&) const;	//find a multiple to be the projection of another vector
+	const vec3 proj_vec(const vec3& vec) const
+	{ 
+		return proj_t(vec) * (*this); 
+	}
+	const bool isvalid() const
+	{ 
+		return !ISNAN(x); 
+	}
+};
+
+const vec3 NOVEC(NAN, NAN, NAN);
+
 
 class color: public vec3
 {
@@ -26,7 +69,10 @@ public:
 	}
 };
 
+color operator *(color, color);
+
 double dot(vec3, vec3);
+
 
 class ray
 {
@@ -34,6 +80,23 @@ public:
 	vec3 start;
 	vec3 direc;
 	color intensity; //(r,g,b)
+	const double pedal_t(const vec3&) const;
+	void setstart(double x, double y, double z)
+	{
+		start = vec3(x, y, z);
+	}
+	void setdirec(double x, double y, double z)
+	{
+		direc = vec3(x, y, z);
+	}
+	const vec3 t2xyz(double t) const
+	{
+		return start + t * direc;
+	}
+	const vec3 pedal_xyz(const vec3& point) const
+	{
+		return t2xyz(pedal_t(point));
+	}
 };
 
 class shape
@@ -43,11 +106,15 @@ protected:
 	color dif_rate;
 
 public:
-	virtual bool ifcross(ray) = 0;
-	virtual vec3 findcross(ray) = 0;
-	virtual vec3 getnormal(ray) = 0;
 
-	virtual ray reflect(ray);
+
+	const virtual bool ifcross(const ray&) = 0;
+	const virtual vec3 findcross(const ray&, double *pt = &dummyF, int *po = &dummyI) = 0;
+	// pt: the t value, po: 1 from outside, -1 from inside
+	const virtual vec3 getnormal(const ray&) = 0;
+	const virtual TYPE type() = 0;
+
+	const virtual ray reflect(const ray&);
 };
 
 class transparent : public shape
@@ -55,7 +122,7 @@ class transparent : public shape
 protected:
 	double density;	//refraction rate
 public:
-	virtual ray refract(ray);
+	const virtual ray refract(const ray&);
 	transparent(){}
 };
 
