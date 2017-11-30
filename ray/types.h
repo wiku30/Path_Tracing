@@ -102,12 +102,14 @@ public:
 class shape
 {
 protected:
-	color mir_rate;
-	color dif_rate;
+
 
 public:
-
-
+	color emit;
+	double mir_rate;
+	double dif_rate;
+	color mir_color;
+	color dif_color;
 	const virtual bool ifcross(const ray&) = 0;
 	const virtual vec3 findcross(const ray&, double *pt = &dummyF, int *po = &dummyI) = 0;
 	// pt: the t value, po: 1 from outside, -1 from inside
@@ -115,6 +117,12 @@ public:
 	const virtual TYPE type() = 0;
 
 	const virtual ray reflect(const ray&);
+	const virtual ray diffuse(const ray&);
+
+	const virtual color emission(const ray&)
+	{
+		return color(emit);
+	}
 };
 
 class transparent : public shape

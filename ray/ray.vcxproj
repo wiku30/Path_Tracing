@@ -151,7 +151,9 @@
   <ItemGroup>
     <ClCompile Include="ball.cpp" />
     <ClCompile Include="bezier.cpp" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="triangle.cpp" />
     <ClCompile Include="types.cpp" />
     <ClCompile Include="poly.cpp" />
@@ -159,8 +161,10 @@
   <ItemGroup>
     <ClInclude Include="ball.h" />
     <ClInclude Include="bezier.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="heart.h" />
     <ClInclude Include="poly.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>

@@ -19,6 +19,10 @@ public:
 		normal = l1.cross(l2);
 		normal /= sqrt(normal.dot(normal));
 		bias = - normal.dot(n0);
+		mir_rate = 0.3;
+		dif_rate = 0.5;
+		mir_color = 1;
+		dif_color = 1;
 	}
 	const bool ifcross(const ray& in);
 	const vec3 findcross(const ray& in, double *pt = &dummyF, int *po = &dummyI);
