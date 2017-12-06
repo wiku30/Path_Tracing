@@ -2,13 +2,13 @@
 
 #define EPS 1e-7
 
-ball::ball(vec3 center_, double radius_, double emit_)
+ball::ball(vec3 center_, double radius_, color emit_)
 {
 	center = center_;
 	radius = radius_;
 	emit = emit_;
-	mir_rate = 0.3;
-	dif_rate = 0.5;
+	mir_rate = 0.4;
+	dif_rate = 0.6;
 	mir_color = color(1);
 	dif_color = color(1);
 }
@@ -29,7 +29,11 @@ const vec3 ball::findcross(const ray& in, double *pt, int *po)
 	*po = 0;
 	*pt = NAN;
 	if (delta < 0)			//not passing
+	{
+		*pt = NAN;
 		return NOVEC;
+	}
+		
 	double dt = sqrt(delta);
 	double t1 = pedal_t - dt;
 	double t2 = pedal_t + dt;
@@ -38,7 +42,7 @@ const vec3 ball::findcross(const ray& in, double *pt, int *po)
 		*pt = NAN;
 		return NOVEC;
 	}
-	if (t1*mag < EPS)		//inside
+	if (t1*mag < -EPS)		//inside
 	{
 		*pt = t2;
 		*po = -1;

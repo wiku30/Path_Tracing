@@ -48,7 +48,7 @@ color scene::trace(const ray& r, int TTL)
 	int mir_thres = 4096 * (first_shape->mir_rate);
 	int dif_thres = 4096 * (first_shape->mir_rate + first_shape->dif_rate);
 	color c(0);
-	c += first_shape->emission(r);
+	c += first_shape->emission(r) * r.intensity;
 	if (rnd < mir_thres) //mirror
 	{
 		c += trace(first_shape->reflect(r), TTL - 1);

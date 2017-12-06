@@ -1,4 +1,6 @@
 #include "triangle.h"
+#include "iostream"
+using namespace std;
 
 const vec3 triangle::getnormal(const ray& in)
 {
@@ -13,11 +15,20 @@ const vec3 triangle::findcross(const ray& in, double *pt, int *po)
 {
 	double vn = in.direc.dot(normal);
 	double pot = normal.dot(in.start) + bias;
-	if (vn == 0)
+	if (abs(vn) < 1e-7)
+	{
+		*pt = NAN;
+		*po = 0;
 		return NOVEC;
+	}
 	double t = -pot / vn;
 	vec3 p = in.t2xyz(t);	//intersection with the plane
-
+	if (t < 1e-7)	
+	{
+		*pt = NAN;
+		*po = 0;
+		return NOVEC;
+	}
 	//judge if p is within the triangle
 	double S1, S2, S3, S;
 	vec3 l1, l2, l3, c1, c2, c3, c;

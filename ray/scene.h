@@ -10,8 +10,8 @@ class scene
 {
 	vector<shape*> shapes;
 	camera& view;
-	static const int repeat = 30;
-	static const int depth = 15;
+	static const int repeat = 200;
+	static const int depth = 10;
 public:
 	scene(camera& v): view(v){}
 	void add_shape(shape*);

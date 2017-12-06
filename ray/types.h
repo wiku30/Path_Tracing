@@ -61,6 +61,14 @@ public:
 		y = a;
 		z = a;
 	}
+
+	color(double a, double b, double c)
+	{
+		x = a;
+		y = b;
+		z = c;
+	}
+	
 	color()
 	{
 		x = 0;

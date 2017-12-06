@@ -39,6 +39,9 @@
     <ClCompile Include="scene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="texture.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="types.h">

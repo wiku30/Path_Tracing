@@ -11,8 +11,8 @@ class camera
 
 public:
 	double xmin, xmax, ymin, ymax;
-	static const int x_res = 50, y_res = 50;
-	camera() : xmin(-5), xmax(5), ymin(-5), ymax(5), origin(0, 0, -10) {}
+	static const int x_res = 400, y_res = 400;
+	camera() : xmin(-8), xmax(8), ymin(-8), ymax(8), origin(0, 0, -10) {}
 	color pic[x_res + 1][y_res + 1];
 	ray cast(int x, int y);
 };
