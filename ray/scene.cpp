@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void scene::add_shape(shape* s)
+void scene::add_shape(random_shape* s)
 {
 	shapes.push_back(s);
 }
@@ -21,11 +21,11 @@ color scene::draw(const ray& r)
 
 color scene::trace(const ray& r, int TTL)
 {
-	if (TTL <= 0)
+	if (TTL <= 0 || r.intensity.dot(r.intensity) < 0.02*0.02)
 		return color(0);
 
 	double mint = 1e+308;
-	shape* first_shape;
+	random_shape* first_shape;
 	vec3 see_point;
 	vec3 temp;
 	double t;
@@ -47,15 +47,20 @@ color scene::trace(const ray& r, int TTL)
 	int rnd = rand() % 4096;
 	int mir_thres = 4096 * (first_shape->mir_rate);
 	int dif_thres = 4096 * (first_shape->mir_rate + first_shape->dif_rate);
+	int refr_thres = 4096 * (first_shape->mir_rate + first_shape->dif_rate + first_shape->refr_rate);
 	color c(0);
 	c += first_shape->emission(r) * r.intensity;
 	if (rnd < mir_thres) //mirror
 	{
-		c += trace(first_shape->reflect(r), TTL - 1);
+		c += trace(first_shape->reflect(r), TTL - 1) * first_shape->texture(r);
 	}
 	else if (rnd < dif_thres) //diffusion
 	{
-		c += trace(first_shape->diffuse(r), TTL - 1);
+		c += trace(first_shape->diffuse(r), TTL - 1) * first_shape->texture(r); 
+	}
+	else if (rnd < refr_thres)
+	{
+		c += trace(first_shape->refract(r), TTL - 1) * first_shape->texture(r);
 	}
 	return c;
 }

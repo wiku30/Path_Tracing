@@ -11,29 +11,24 @@ using namespace cv;
 
 class tex_face : public triangle
 {
-	color data[500][500];
-	double xmin, xmax, ymin, ymax;
-	int res;
+	color data[80][100];
+	double xmin, xmax, zmin, zmax;
+	int xres, zres;
 public:
-	tex_face(): triangle(vec3(-100, -100, 70), vec3(-100, 100, 70), vec3(200, 0, 70))
+	tex_face() : triangle(vec3(-30, -29.999, -1000), vec3(-30, -29.999, 1000), vec3(2000, -29.999, 0))
 	{
-		xmin = -30;
-		xmax = 30;
-		ymin = -30;
-		ymax = 30;
-		res = 500;
+		xmin = -20;
+		xmax = 20;
+		zmin = 20;
+		zmax = 70;
+		xres = 80;
+		zres = 100;
 		mir_rate = 0;
-		dif_rate = 0;
-		Mat pic = imread("texture/wiku.jpg");
-		/*namedWindow("游戏原画");   
-		imshow("游戏原画", pic);*/
-		for (int i = 0; i < 500; i++)
+		dif_rate = 0.8;
+		Mat pic = imread("texture/iiis.jpg");
+		for (int i = 0; i < xres; i++)
 		{
-			if (!(i % 25))
-			{
-				printf("%d\n", i);
-			}
-			for (int j = 0; j < 500; j++)
+			for (int j = 0; j < zres; j++)
 			{
 				data[i][j].x = pic.at<Vec3b>(i, j)[0];
 				data[i][j].y = pic.at<Vec3b>(i, j)[1];
@@ -42,24 +37,40 @@ public:
 		}
 	}
 
-	const color emission(const ray& r)
+	virtual const color texture(const ray& in);
+
+
+};
+
+class tex_face2 : public triangle
+{
+	color data[500][500];
+	double xmin, xmax, ymin, ymax;
+	int xres, yres;
+public:
+	tex_face2() : triangle(vec3(-30, -1000, 69.999), vec3(-30, 1000, 69.999), vec3(2000, 0, 69.999))
 	{
-		vec3 place = findcross(r);
-		int xpix, ypix;
-		xpix = int((place.x - xmin) / (xmax - xmin)*res);
-		ypix = int((place.y - ymin) / (ymax - ymin)*res);
-		if (xpix >= 0 && xpix < res && ypix >= 0 && ypix < res)
+		xmin = -30;
+		xmax = 30;
+		ymin = -30;
+		ymax = 30;
+		xres = 500;
+		yres = 500;
+		mir_rate = 0;
+		dif_rate = 0.9;
+		Mat pic = imread("texture/wiku.jpg");
+		for (int i = 0; i < xres; i++)
 		{
-			color res;
-			res.x = data[xpix][ypix].x*data[xpix][ypix].x / 65536.0;
-			res.y = data[xpix][ypix].y*data[xpix][ypix].y / 65536.0;
-			res.z = data[xpix][ypix].z*data[xpix][ypix].z / 65536.0;
-			return res;
-		}
-		else
-		{
-			return 0;
+			for (int j = 0; j < yres; j++)
+			{
+				data[i][j].x = pic.at<Vec3b>(i, j)[0];
+				data[i][j].y = pic.at<Vec3b>(i, j)[1];
+				data[i][j].z = pic.at<Vec3b>(i, j)[2];
+			}
 		}
 	}
+
+	virtual const color texture(const ray& in);
+
 
 };

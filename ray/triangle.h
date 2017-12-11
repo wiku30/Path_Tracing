@@ -9,7 +9,7 @@ protected:
 	vec3 normal;
 	double bias;	// dot(normal,node[i]) + bias == 0
 public:
-	triangle(const vec3& n0, const vec3& n1, const vec3& n2, color emi = 0, double mir = 0, double dif = 0.3)
+	triangle(const vec3& n0, const vec3& n1, const vec3& n2, color emi = 0, double mir = 0, double dif = 0.3, color mirc=1, color difc=1)
 	{
 		node[0] = n0;
 		node[1] = n1;
@@ -20,10 +20,10 @@ public:
 		normal = l1.cross(l2);
 		normal /= sqrt(normal.dot(normal));
 		bias = - normal.dot(n0);
-		mir_rate = sqrt(mir);
+		mir_rate = mir;
 		dif_rate = dif;
-		mir_color = sqrt(mir);
-		dif_color = 1;
+		mir_color = mirc;
+		dif_color = difc;
 	}
 	triangle(){}
 	const bool ifcross(const ray& in);

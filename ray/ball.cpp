@@ -2,15 +2,16 @@
 
 #define EPS 1e-7
 
-ball::ball(vec3 center_, double radius_, color emit_)
+ball::ball(vec3 center_, double radius_, color emit_, double mir, double dif, color mirc, color difc, double rfr)
 {
 	center = center_;
 	radius = radius_;
 	emit = emit_;
-	mir_rate = 0.4;
-	dif_rate = 0.6;
-	mir_color = color(1);
-	dif_color = color(1);
+	mir_rate = mir;
+	dif_rate = dif;
+	mir_color = mirc;
+	dif_color = difc;
+	refr_rate = rfr;
 }
 
 const bool ball::ifcross(const ray& in)

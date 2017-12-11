@@ -157,7 +157,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene.cpp" />
-    <ClCompile Include="texture.h" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="triangle.cpp" />
     <ClCompile Include="types.cpp" />
     <ClCompile Include="poly.cpp" />
@@ -169,6 +169,7 @@
     <ClInclude Include="heart.h" />
     <ClInclude Include="poly.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>

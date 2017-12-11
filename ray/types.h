@@ -1,6 +1,12 @@
 #ifndef WIKU_TYPES
 #define WIKU_TYPES
 
+
+#define RES 299
+#define PRECISION 88
+#define ITER_DEPTH 10
+
+
 #include <opencv2/core/core.hpp>  
 #include <math.h>
 #include <iostream>
@@ -8,6 +14,7 @@
 #define TYPE int
 #define BALL 1
 #define TRIANGLE 2
+
 
 static double dummyF;
 static int dummyI;
@@ -126,7 +133,7 @@ public:
 
 	const virtual ray reflect(const ray&);
 	const virtual ray diffuse(const ray&);
-
+	const virtual color texture(const ray&) { return 1; }
 	const virtual color emission(const ray&)
 	{
 		return color(emit);
@@ -136,7 +143,7 @@ public:
 class transparent : public shape
 {
 protected:
-	double density;	//refraction rate
+	double density = 1.5;	//refraction rate
 public:
 	const virtual ray refract(const ray&);
 	transparent(){}
@@ -144,10 +151,8 @@ public:
 
 class random_shape : public transparent		//Monte Carlo
 {
-protected:
-
-	color refr_rate;
 public:
+	double refr_rate;
 	random_shape(){}
 };
 

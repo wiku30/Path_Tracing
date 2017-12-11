@@ -69,6 +69,49 @@ const ray shape::diffuse(const ray& in)
 
 const ray transparent::refract(const ray& in) 
 {
-	// TODO: implement refract
-	return ray();
+	ray out = in;
+	int dir;
+	double dummy;
+	vec3 cross = findcross(in, &dummy, &dir);
+	if (cross.isvalid())
+	{
+		double n = dir == 1 ? 1 / density : density;
+		vec3 normal = getnormal(in);
+		normal /= normal.abs();
+
+		//circumventing computations of sin/cos
+		double cosi = abs(in.direc.dot(normal) / in.direc.abs()); 
+		double sini = sqrt(1 - cosi*cosi);
+		double sinr = n * sini;
+		if (sinr >= 1)
+		{
+			return reflect(in);
+		}
+		else
+		{
+			out.start = cross;
+			double cosr = sqrt(1 - sinr*sinr);
+			if (sinr == 0) //preserves direction
+			{
+				out.intensity = out.intensity * mir_color;
+				out.start += 1e-5 * out.direc;
+				return out;
+			}
+			else
+			{
+				vec3 opposite = in.direc - normal.proj_vec(in.direc);
+				opposite /= opposite.abs(); // with r = 90 degree
+				out.direc = cosr * (-normal * dir) + sinr * opposite;
+				out.intensity = out.intensity * mir_color;
+				out.start += 1e-5 * out.direc;
+				return out;
+			}
+		}
+	}
+	else
+	{
+		return in;
+	}
+
+
 }

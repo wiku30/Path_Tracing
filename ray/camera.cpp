@@ -13,7 +13,7 @@ ray camera::cast(int x, int y)
 	zz = 0 - origin.z;
 	res.setdirec(xx, yy, zz);
 	res.intensity = color(1);
-	if (y == 0)
+	if (y == 0 && !(x%5))
 	{
 		printf("%d..\n", x);
 	}
