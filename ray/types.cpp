@@ -34,6 +34,7 @@ const ray shape::reflect(const ray& in)
 		out.start = findcross(in);
 		out.direc = in.direc - 2 * normal.proj_vec(in.direc);
 		out.intensity = out.intensity * mir_color;
+		out.start += 1e-5 * out.direc;
 	}
 	
 	return out;
@@ -45,6 +46,7 @@ const ray shape::diffuse(const ray& in)
 	vec3 normal = getnormal(in);
 	if (normal.isvalid())
 	{
+		out.start = findcross(in); // !! forgotten earlier!
 		normal /= normal.abs();
 		if (normal.dot(in.direc) > 0)
 			normal = -normal;
@@ -62,6 +64,8 @@ const ray shape::diffuse(const ray& in)
 		out.direc = normal*ra + p*vert1*cos(rb) + p*vert2*sin(rb);
 
 		out.intensity = out.intensity * dif_color;
+
+		out.start += 1e-4 * out.direc;
 	}
 
 	return out;
@@ -103,7 +107,7 @@ const ray transparent::refract(const ray& in)
 				opposite /= opposite.abs(); // with r = 90 degree
 				out.direc = cosr * (-normal * dir) + sinr * opposite;
 				out.intensity = out.intensity * mir_color;
-				out.start += 1e-5 * out.direc;
+				out.start += 1e-4 * out.direc;
 				return out;
 			}
 		}

@@ -1,27 +1,29 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (ray.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  main.cpp
-w:\大三上\图形学\ray\ray\ray\main.cpp(163): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-w:\大三上\图形学\ray\ray\ray\main.cpp(164): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-w:\大三上\图形学\ray\ray\ray\main.cpp(165): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-w:\大三上\图形学\ray\ray\ray\main.cpp(218): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-w:\大三上\图形学\ray\ray\ray\main.cpp(219): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-w:\大三上\图形学\ray\ray\ray\main.cpp(220): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-w:\大三上\图形学\ray\ray\ray\main.cpp(62): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): note: 参见“strncpy”的声明
-w:\大三上\图形学\ray\ray\ray\main.cpp(63): warning C4996: 'strncat': This function or variable may be unsafe. Consider using strncat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(255): note: 参见“strncat”的声明
-  正在生成代码...
-  正在编译...
-  types.cpp
-  triangle.cpp
-  texture.cpp
-  scene.cpp
-w:\大三上\图形学\ray\ray\ray\scene.cpp(48): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-w:\大三上\图形学\ray\ray\ray\scene.cpp(49): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-w:\大三上\图形学\ray\ray\ray\scene.cpp(50): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-  camera.cpp
-  bezier.cpp
+cl : 命令行 warning D9007: “/Gm”需要“/Zi 或 /ZI”；选项被忽略
   ball.cpp
-  正在生成代码...
-  ray.vcxproj -> W:\大三上\图形学\ray\ray\x64\Debug\raytrace.exe
-  ray.vcxproj -> W:\大三上\图形学\ray\ray\x64\Debug\raytrace.pdb (Full PDB)
+  bezier.cpp
+  camera.cpp
+  main.cpp
+main.cpp(183): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(184): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(185): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(240): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(241): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(242): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(64): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(346): note: 参见“strncpy”的声明
+main.cpp(65): warning C4996: 'strncat': This function or variable may be unsafe. Consider using strncat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(255): note: 参见“strncat”的声明
+  scene.cpp
+scene.cpp(48): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+scene.cpp(49): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+scene.cpp(50): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+  texture.cpp
+  triangle.cpp
+  types.cpp
+  ball.obj : 找到 MSIL .netmodule 或使用 /GL 编译的模块；正在使用 /LTCG 重新启动链接；将 /LTCG 添加到链接命令行以改进链接器性能
+LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/LTCG”规范)
+  正在生成代码
+  已完成代码的生成
+  ray.vcxproj -> W:\大三上\杂项\ray-master\x64\Debug\raytrace.exe
+  ray.vcxproj -> W:\大三上\杂项\ray-master\x64\Debug\raytrace.pdb (Full PDB)

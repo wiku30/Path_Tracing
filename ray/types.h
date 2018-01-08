@@ -2,9 +2,9 @@
 #define WIKU_TYPES
 
 
-#define RES 299
-#define PRECISION 88
-#define ITER_DEPTH 10
+#define RES 600
+#define PRECISION 1500
+#define ITER_DEPTH 40
 
 
 #include <opencv2/core/core.hpp>  

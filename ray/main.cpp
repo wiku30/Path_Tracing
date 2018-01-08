@@ -26,12 +26,14 @@ using namespace cv;
 #define THREADS 8
 
 
-Mat img(RES+1, RES+1, CV_8UC3);
+Mat img(RES, RES, CV_8UC3);
 
 int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 {
-	int tick = clock();
 
+	
+	int tick = clock();
+	
 	bool multi_flag = 0;
 	int threads = 1;
 	int threadID;
@@ -68,7 +70,11 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 
 	camera cmr;
 	scene scn(cmr);
-	ball b1(vec3(-15, -12, 50), 10, 0, 0.35, 0, 1, 1, 0.65);	
+	ball b1(vec3(-15, -12, 50), 8, 0, 0.08, 0.01, 1, 1, 0.91);
+
+	ball b2(vec3(24, -15, 42), 6, 0, 0.1, 0.9, 1, color(0, 0, 1));
+
+	ball light(vec3(-70,0,40), 41, 30, 0, 0);
 
 	vec3 A(-30, -30, 70);
 	vec3 B(-30, 30, 70);
@@ -100,10 +106,13 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	triangle s6(S, P, T, 0, 0.63, 0.27, color(0.7, 1, 0.7), color(0.7, 1, 0.7));
 
 	//front
-	triangle t1(A, B, C, 0, 0, 0.9, 1, color(0, 0, 1));
-	triangle t2(B, C, D, 0, 0, 0.9, 1, color(0, 0, 1));
+	triangle t1(A, B, C, 0, 0, 0.9, 1, 1);
+	triangle t2(B, C, D, 0, 0, 0.9, 1, 1);
 
-	triangle sky(sky1, sky2, sky3, color(1.5,1.5,1.5), 0, 0);
+	triangle t3(A, B, E, 0, 0, 0.9, 1, 1);
+	triangle t4(B, E, F, 0, 0, 0.9, 1, 1);
+
+	//triangle sky(sky1, sky2, sky3, color(1.5,1.5,1.5), 0, 0);
 	
 	//covered by texture
 	triangle t5(A, C, E, 0, 0, 0.9, 1, color(0, 0, 1));
@@ -120,14 +129,23 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	triangle t11(E, F, G, 0, 0, 0.9);
 	triangle t12(F, G, H, 0, 0, 0.9);
 
+	
+
 
 	ray r;
 	r.start = vec3(0, 0, 0);
 	r.direc = vec3(0, 0, 1);
+	/*
+	for(int i=1; i<10; i++)
+		cout << front.diffuse(r).start << "   " << front.diffuse(r).direc << endl;
 
+	int xx;
+	cin >> xx;
+	*/
 
 	scn.add_shape(&b1);
-	//scn.add_shape(&b2);
+	scn.add_shape(&b2);
+	scn.add_shape(&light);
 
 
 	scn.add_shape(&s1);
@@ -140,11 +158,13 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	scn.add_shape(&left);
 	scn.add_shape(&front);
 
-	scn.add_shape(&t1);
-	scn.add_shape(&t2);
-	scn.add_shape(&sky);
-	scn.add_shape(&t5);
-	scn.add_shape(&t6);
+	//scn.add_shape(&t1);
+	//scn.add_shape(&t2);
+	scn.add_shape(&t3);
+	scn.add_shape(&t4);
+	//scn.add_shape(&sky);
+	//scn.add_shape(&t5);
+	//scn.add_shape(&t6);
 	scn.add_shape(&t7);
 	scn.add_shape(&t8);
 	scn.add_shape(&t9);
@@ -156,9 +176,9 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	cmr.pic;
 	if (!multi_flag)
 	{
-		for (int i = 0; i <= RES; i++)
+		for (int i = 0; i < RES; i++)
 		{
-			for (int j = 0; j <= RES; j++)
+			for (int j = 0; j < RES; j++)
 			{
 				img.at<Vec3b>(i, j)[0] = min(sqrt(cmr.pic[i][j].x) * 256, 255.0);
 				img.at<Vec3b>(i, j)[1] = min(sqrt(cmr.pic[i][j].y) * 256, 255.0);
@@ -172,9 +192,9 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	{
 		ofstream ouf(name);
 		//ouf << RES << " " << RES << endl;
-		for (int i = 0; i <= RES; i++)
+		for (int i = 0; i < RES; i++)
 		{
-			for (int j = 0; j <= RES; j++)
+			for (int j = 0; j < RES; j++)
 			{
 				ouf << cmr.pic[i][j].x << " "
 					<< cmr.pic[i][j].y << " "
@@ -195,7 +215,9 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 				return 0;
 			}
 		}
+
 		//merging
+		
 		cout << "start merging..." << endl;
 		ifstream sub[THREADS];
 		for (int k = 0; k < threads; k++)
@@ -203,9 +225,9 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 			name[10] = k + '1';
 			sub[k].open(name);
 		}
-		for (int i = 0; i <= RES; i++)
+		for (int i = 0; i < RES; i++)
 		{
-			for (int j = 0; j <= RES; j++)
+			for (int j = 0; j < RES; j++)
 			{
 				color pix(0);
 				color tmp(0);

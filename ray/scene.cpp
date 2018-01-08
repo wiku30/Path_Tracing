@@ -21,7 +21,7 @@ color scene::draw(const ray& r)
 
 color scene::trace(const ray& r, int TTL)
 {
-	if (TTL <= 0 || r.intensity.dot(r.intensity) < 0.02*0.02)
+	if (TTL <= 0 || r.intensity.dot(r.intensity) < 0.005*0.005)
 		return color(0);
 
 	double mint = 1e+308;
@@ -67,9 +67,9 @@ color scene::trace(const ray& r, int TTL)
 
 void scene::shoot()
 {
-	for (int i = 0; i <= view.y_res; i++)
+	for (int i = 0; i < view.y_res; i++)
 	{
-		for (int j = 0; j <= view.y_res; j++)
+		for (int j = 0; j < view.y_res; j++)
 		{
 			view.pic[i][j] = draw(view.cast(i, j));
 		}

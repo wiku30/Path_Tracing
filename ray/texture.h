@@ -17,14 +17,14 @@ class tex_face : public triangle
 public:
 	tex_face() : triangle(vec3(-30, -29.999, -1000), vec3(-30, -29.999, 1000), vec3(2000, -29.999, 0))
 	{
-		xmin = -20;
-		xmax = 20;
-		zmin = 20;
+		xmin = -17;
+		xmax = 17;
+		zmin = 27.5;
 		zmax = 70;
 		xres = 80;
 		zres = 100;
 		mir_rate = 0;
-		dif_rate = 0.8;
+		dif_rate = 0.9;
 		Mat pic = imread("texture/iiis.jpg");
 		for (int i = 0; i < xres; i++)
 		{
@@ -44,7 +44,7 @@ public:
 
 class tex_face2 : public triangle
 {
-	color data[500][500];
+	color data[850][850];
 	double xmin, xmax, ymin, ymax;
 	int xres, yres;
 public:
@@ -54,8 +54,8 @@ public:
 		xmax = 30;
 		ymin = -30;
 		ymax = 30;
-		xres = 500;
-		yres = 500;
+		xres = 850;
+		yres = 850;
 		mir_rate = 0;
 		dif_rate = 0.9;
 		Mat pic = imread("texture/wiku.jpg");
