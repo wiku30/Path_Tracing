@@ -28,10 +28,11 @@ const double ray::pedal_t(const vec3& point) const
 const ray shape::reflect(const ray& in)
 {
 	ray out(in);
-	vec3 normal = getnormal(in);
-	if (normal.isvalid())
+	vec3 pt = findcross(in);
+	vec3 normal = getnormal(pt);
+	if (pt.isvalid())
 	{
-		out.start = findcross(in);
+		out.start = pt;
 		out.direc = in.direc - 2 * normal.proj_vec(in.direc);
 		out.intensity = out.intensity * mir_color;
 		out.start += 1e-5 * out.direc;
@@ -43,10 +44,11 @@ const ray shape::reflect(const ray& in)
 const ray shape::diffuse(const ray& in)
 {
 	ray out(in);
-	vec3 normal = getnormal(in);
-	if (normal.isvalid())
+	vec3 pt = findcross(in);
+	vec3 normal = getnormal(pt);
+	if (pt.isvalid())
 	{
-		out.start = findcross(in); // !! forgotten earlier!
+		out.start = pt; // !! forgotten earlier!
 		normal /= normal.abs();
 		if (normal.dot(in.direc) > 0)
 			normal = -normal;
@@ -80,7 +82,7 @@ const ray transparent::refract(const ray& in)
 	if (cross.isvalid())
 	{
 		double n = dir == 1 ? 1 / density : density;
-		vec3 normal = getnormal(in);
+		vec3 normal = getnormal(cross);
 		normal /= normal.abs();
 
 		//circumventing computations of sin/cos

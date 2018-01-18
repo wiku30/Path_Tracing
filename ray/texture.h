@@ -15,11 +15,11 @@ class tex_face : public triangle
 	double xmin, xmax, zmin, zmax;
 	int xres, zres;
 public:
-	tex_face() : triangle(vec3(-30, -29.999, -1000), vec3(-30, -29.999, 1000), vec3(2000, -29.999, 0))
+	tex_face() : triangle(vec3(-1000, 29.999, -1000), vec3(-1000, 29.999, 1000), vec3(2000, 29.999, 0))
 	{
-		xmin = -17;
-		xmax = 17;
-		zmin = 27.5;
+		xmin = -16;
+		xmax = 16;
+		zmin = 30;
 		zmax = 70;
 		xres = 80;
 		zres = 100;
@@ -30,9 +30,9 @@ public:
 		{
 			for (int j = 0; j < zres; j++)
 			{
-				data[i][j].x = pic.at<Vec3b>(i, j)[0];
-				data[i][j].y = pic.at<Vec3b>(i, j)[1];
-				data[i][j].z = pic.at<Vec3b>(i, j)[2];
+				data[i][j].x = pic.at<Vec3b>(i, zres-j-1)[0];
+				data[i][j].y = pic.at<Vec3b>(i, zres-j-1)[1];
+				data[i][j].z = pic.at<Vec3b>(i, zres-j-1)[2];
 			}
 		}
 	}
@@ -50,9 +50,9 @@ class tex_face2 : public triangle
 public:
 	tex_face2() : triangle(vec3(-30, -1000, 69.999), vec3(-30, 1000, 69.999), vec3(2000, 0, 69.999))
 	{
-		xmin = -30;
+		xmin = -30.1;
 		xmax = 30;
-		ymin = -30;
+		ymin = -30.1;
 		ymax = 30;
 		xres = 850;
 		yres = 850;

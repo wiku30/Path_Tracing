@@ -14,10 +14,6 @@ ball::ball(vec3 center_, double radius_, color emit_, double mir, double dif, co
 	refr_rate = rfr;
 }
 
-const bool ball::ifcross(const ray& in)
-{
-	return findcross(in).isvalid();
-}
 
 const vec3 ball::findcross(const ray& in, double *pt, int *po)
 {
@@ -58,10 +54,8 @@ const vec3 ball::findcross(const ray& in, double *pt, int *po)
 
 }
 
-const vec3 ball::getnormal(const ray& in)
+const vec3 ball::getnormal(const vec3& in)
 {
-	vec3 v = findcross(in);
-	if (v.isvalid())
-		return v - center;
+	return in - center;
 	return NOVEC;
 }

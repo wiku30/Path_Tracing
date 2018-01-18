@@ -1,4 +1,7 @@
 #include "bezier.h"
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 static bool init_flag = 0;
 static const int maxn = 10;
@@ -23,23 +26,58 @@ void init()
 	init_flag = 1;
 }
 
-vec3 findPoint(const vector<vec3> points, double place)
+vec3 bezier::findPoint(double xx, double yy)
 {
 	if (!init_flag)
 		init();
 	vec3 res(0,0,0);
-	int n = (int)points.size() - 1;
+	int n = deg;
 	for (int i = 0; i <= n; i++)
 	{
-		res.x += points[i].x * C[n][i] * pow(place, i) * pow(1 - place, n-i);
-		res.y += points[i].y * C[n][i] * pow(place, i) * pow(1 - place, n-i);
-		res.z += points[i].z * C[n][i] * pow(place, i) * pow(1 - place, n-i);
+		for (int j = 0; j <= n; j++)
+		{
+			res += mat[i][j] * C[n][i] *C[n][j] * pow(xx, i) * pow(1 - xx, n - i)
+				* pow(yy, j) * pow(1 - yy, n - j);
+		}
 	}
 	return res;
 }
 
-double findCross2D(const vector<vec3>& points, const ray& cast)
+void bezier::genMesh(int n)
 {
-	//TODO: implement findCross2D
-	return 0;
+	ofstream of("mesh/mesh.obj");
+	vec3 mesh[30][30];
+	double tick = 1.0 / (n-1);
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			mesh[i][j] = findPoint(tick*i, tick*j);
+			vec3 p = mesh[i][j];
+			of << "v " << p.x << " " << p.y << " " << p.z << endl;
+		}
+	}
+	for (int i = 0; i < n - 1; i++)
+	{
+		for (int j = 0; j < n - 1; j++)
+		{
+			of << "f " << i*n + j + 1 << " " << i*n + j + 2 << " " << (i + 1)*n + j + 1 << " " << (i + 1)*n + j + 2 << endl;
+		}
+	}
+	of.close();
+
 }
+
+bezier::bezier()
+{
+	mat[0][0].set(22, -30, 70);
+	mat[0][1].set(17, 0, 70);
+	mat[0][2].set(22, 30, 70);
+	mat[1][0].set(19, -30, 40);
+	mat[1][1].set(27, 0, 40);
+	mat[1][2].set(19, 30, 40);
+	mat[2][0].set(22, -30, 10);
+	mat[2][1].set(17, 0, 10);
+	mat[2][2].set(22, 30, 10);
+}
+

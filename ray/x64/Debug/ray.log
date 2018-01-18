@@ -4,15 +4,15 @@ cl : 命令行 warning D9007: “/Gm”需要“/Zi 或 /ZI”；选项被忽略
   bezier.cpp
   camera.cpp
   main.cpp
-main.cpp(183): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-main.cpp(184): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-main.cpp(185): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-main.cpp(240): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-main.cpp(241): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-main.cpp(242): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
-main.cpp(64): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+main.cpp(187): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(188): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(189): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(247): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(248): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(249): warning C4244: “=”: 从“double”转换到“uchar”，可能丢失数据
+main.cpp(74): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(346): note: 参见“strncpy”的声明
-main.cpp(65): warning C4996: 'strncat': This function or variable may be unsafe. Consider using strncat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+main.cpp(75): warning C4996: 'strncat': This function or variable may be unsafe. Consider using strncat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(255): note: 参见“strncat”的声明
   scene.cpp
 scene.cpp(48): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
@@ -25,5 +25,5 @@ scene.cpp(50): warning C4244: “初始化”: 从“double”转换到“int”
 LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/LTCG”规范)
   正在生成代码
   已完成代码的生成
-  ray.vcxproj -> W:\大三上\杂项\ray-master\x64\Debug\raytrace.exe
-  ray.vcxproj -> W:\大三上\杂项\ray-master\x64\Debug\raytrace.pdb (Full PDB)
+  ray.vcxproj -> W:\大三上\图形学\ray\ray\x64\Debug\raytrace.exe
+  ray.vcxproj -> W:\大三上\图形学\ray\ray\x64\Debug\raytrace.pdb (Full PDB)

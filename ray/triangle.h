@@ -26,8 +26,7 @@ public:
 		dif_color = difc;
 	}
 	triangle(){}
-	const bool ifcross(const ray& in);
 	const vec3 findcross(const ray& in, double *pt = &dummyF, int *po = &dummyI);
-	const vec3 getnormal(const ray& in);
+	const vec3 getnormal(const vec3& in);
 	const TYPE type() { return TRIANGLE; }
 };

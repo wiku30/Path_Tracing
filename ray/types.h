@@ -1,9 +1,19 @@
 #ifndef WIKU_TYPES
 #define WIKU_TYPES
 
+#define HI_RES 1
 
+#if HI_RES
 #define RES 600
 #define PRECISION 1500
+
+#else
+
+#define RES 240
+#define PRECISION 469
+
+#endif
+
 #define ITER_DEPTH 40
 
 
@@ -35,6 +45,12 @@ public:
 		z = p.z;
 	}
 	vec3(double x_, double y_, double z_)
+	{
+		x = x_;
+		y = y_;
+		z = z_;
+	}
+	void set(double x_, double y_, double z_)
 	{
 		x = x_;
 		y = y_;
@@ -125,10 +141,9 @@ public:
 	double dif_rate;
 	color mir_color;
 	color dif_color;
-	const virtual bool ifcross(const ray&) = 0;
 	const virtual vec3 findcross(const ray&, double *pt = &dummyF, int *po = &dummyI) = 0;
 	// pt: the t value, po: 1 from outside, -1 from inside
-	const virtual vec3 getnormal(const ray&) = 0;
+	const virtual vec3 getnormal(const vec3&) = 0;
 	const virtual TYPE type() = 0;
 
 	const virtual ray reflect(const ray&);

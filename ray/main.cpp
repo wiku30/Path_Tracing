@@ -1,3 +1,11 @@
+
+#define DEBUG 0
+//if 0, trigger multi-thread automatically
+
+//#define BEZIER_TEST
+
+#define THREADS 8
+
 #include <iostream>  
 #include <opencv2/core/core.hpp>  
 #include <opencv2/highgui/highgui.hpp>  
@@ -9,6 +17,7 @@
 #include <iomanip>
 
 #include "types.h"
+
 #include "bezier.h"
 #include "ball.h"
 #include "triangle.h"
@@ -20,10 +29,7 @@ using namespace std;
 using namespace cv;
 
 
-#define DEBUG 0
-//if 0, trigger multi-thread automatically
 
-#define THREADS 8
 
 
 Mat img(RES, RES, CV_8UC3);
@@ -31,7 +37,11 @@ Mat img(RES, RES, CV_8UC3);
 int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 {
 
-	
+#ifdef BEZIER_TEST
+
+	bezier bez;
+	bez.genMesh();
+#else
 	int tick = clock();
 	
 	bool multi_flag = 0;
@@ -70,12 +80,12 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 
 	camera cmr;
 	scene scn(cmr);
-	ball b1(vec3(-15, -12, 50), 8, 0, 0.08, 0.01, 1, 1, 0.91);
+	ball b1(vec3(-16, -11, 53), 8, 0, 0.08, 0.00, 1, 1, 0.92);
 
-	ball b2(vec3(24, -15, 42), 6, 0, 0.1, 0.9, 1, color(0, 0, 1));
+	ball b2(vec3(24, -15, 44), 6, 0, 0.1, 0.9, 1, color(0, 0, 1));
 
-	ball light(vec3(-70,0,40), 41, 30, 0, 0);
-
+	ball light(vec3(-70, 0, 40), 41, 30, 0, 0);
+	/*
 	vec3 A(-30, -30, 70);
 	vec3 B(-30, 30, 70);
 	vec3 C(30, -30, 70);
@@ -84,18 +94,31 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	vec3 F(-30, 30, -15);
 	vec3 G(30, -30, -15);
 	vec3 H(30, 30, -15);
+	*/
 
-	vec3 sky1(-200, -100000, -100000);
-	vec3 sky2(-200, -100000, 100000);
-	vec3 sky3(-200, 200000, 0);
+	vec3 bot1(30, -100000, -100000);
+	vec3 bot2(30, -100000, 100000);
+	vec3 bot3(30, 200000, 0);
 
-	vec3 P(23, -7, 50);
+	vec3 left1(-100000, -30, -100000);
+	vec3 left2(-100000, -30, 100000);
+	vec3 left3(200000, -30, 0);
+
+	vec3 top1(-30, -100000, -100000);
+	vec3 top2(-30, -100000, 100000);
+	vec3 top3(-30, 200000, 0);
+
+	vec3 back1(-100000, -100000, -15);
+	vec3 back2(100000, -100000, -15);
+	vec3 back3(0, 200000, -15);
+
+	vec3 P(23, -2, 50);
 	vec3 Q(23, 10, 40);
-	vec3 R(23, 27, 50);
+	vec3 R(23, 22, 50);
 	vec3 S(23, 10, 60);
-	vec3 T(7, 10, 50);
+	vec3 T(10, 10, 50);
 
-	tex_face left;
+	tex_face right;
 	tex_face2 front;
 
 	triangle s1(P, Q, R, 0, 0, 0);
@@ -105,29 +128,17 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	triangle s5(R, S, T, 0, 0.63, 0.27, color(0.7, 1, 0.7), color(0.7, 1, 0.7));
 	triangle s6(S, P, T, 0, 0.63, 0.27, color(0.7, 1, 0.7), color(0.7, 1, 0.7));
 
-	//front
-	triangle t1(A, B, C, 0, 0, 0.9, 1, 1);
-	triangle t2(B, C, D, 0, 0, 0.9, 1, 1);
 
-	triangle t3(A, B, E, 0, 0, 0.9, 1, 1);
-	triangle t4(B, E, F, 0, 0, 0.9, 1, 1);
 
-	//triangle sky(sky1, sky2, sky3, color(1.5,1.5,1.5), 0, 0);
+	triangle top(top1, top2, top3, 0, 0, 0.9, 1, 1);
 	
-	//covered by texture
-	triangle t5(A, C, E, 0, 0, 0.9, 1, color(0, 0, 1));
-	triangle t6(C, E, G, 0, 0, 0.9, 1, color(0, 0, 1));
-
 	//floor 
-	triangle t7(C, D, G, 0, 0, 0.25, 1, color(1, 0.5, 0.7));
-	triangle t8(D, G, H, 0, 0, 0.25, 1, color(1, 0.5, 0.7));
+	triangle bot(bot1, bot2, bot3, 0, 0, 0.25, 1, color(1, 0.5, 0.7));
 	
-	//right mirror
-	triangle t9(B, D, F, 0, 0.75, 0.15);
-	triangle t10(D, F, H, 0, 0.75, 0.15);
+	//left mirror
+	triangle left(left1, left2, left3, 0, 0.8, 0.16);
 
-	triangle t11(E, F, G, 0, 0, 0.9);
-	triangle t12(F, G, H, 0, 0, 0.9);
+	triangle back(back1, back2, back3, 0, 0, 0.9);
 
 	
 
@@ -155,22 +166,15 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	scn.add_shape(&s5);
 	scn.add_shape(&s6);
 
-	scn.add_shape(&left);
+	scn.add_shape(&right);
 	scn.add_shape(&front);
+	scn.add_shape(&top);
 
-	//scn.add_shape(&t1);
-	//scn.add_shape(&t2);
-	scn.add_shape(&t3);
-	scn.add_shape(&t4);
-	//scn.add_shape(&sky);
-	//scn.add_shape(&t5);
-	//scn.add_shape(&t6);
-	scn.add_shape(&t7);
-	scn.add_shape(&t8);
-	scn.add_shape(&t9);
-	scn.add_shape(&t10);
-	scn.add_shape(&t11);
-	scn.add_shape(&t12);
+	scn.add_shape(&bot);
+
+	scn.add_shape(&left);
+
+	scn.add_shape(&back);
 
 	scn.shoot();
 	cmr.pic;
@@ -217,7 +221,10 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 		}
 
 		//merging
-		
+		int tock = clock();
+		cout << fixed << setprecision(1);
+		cout << "Rendering completed. Rendering time: " 
+			<< (tock - tick)*(1.0 / 1000 / 60) << "minutes" << endl;
 		cout << "start merging..." << endl;
 		ifstream sub[THREADS];
 		for (int k = 0; k < threads; k++)
@@ -248,9 +255,15 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 			sub[k].close();
 		}
 		imwrite("result/res.bmp", img);
-		cout << "Merging completed." << endl << fixed << setprecision(1)
-			<< "Time elapsed: " << (clock() - tick)*(1.0 / 1000 / 60) << " minutes";
+		int tt = clock();
+		cout << "Merging completed." << endl << setprecision(0)
+			<< "Merging time: " << (tt - tock)*(1.0 / 1000) << " seconds"<<endl;
+#if !HI_RES
+		double pred = (tock - tick) * 20 + (tt - tock) * 6.25;
+		cout << "Predicted running time for full resolution: " <<
+			pred * (1.0 / 60 / 1000) << " minutes" << endl;
+#endif
 	}
-
+#endif
 	return 0;
 }

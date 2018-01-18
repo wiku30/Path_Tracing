@@ -2,13 +2,9 @@
 #include "iostream"
 using namespace std;
 
-const vec3 triangle::getnormal(const ray& in)
+const vec3 triangle::getnormal(const vec3& in)
 {
-
-	if (ifcross(in))
-		return normal;
-	else
-		return NOVEC;
+	return normal;
 }
 
 const vec3 triangle::findcross(const ray& in, double *pt, int *po)
@@ -55,9 +51,4 @@ const vec3 triangle::findcross(const ray& in, double *pt, int *po)
 		*po = vn > 0 ? -1 : 1;
 		return p;
 	}
-}
-
-const bool triangle::ifcross(const ray& in)
-{
-	return findcross(in).isvalid();
 }
