@@ -175,6 +175,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="heart.h" />
     <ClInclude Include="poly.h" />
+    <ClInclude Include="precision.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="triangle.h" />

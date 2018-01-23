@@ -1,10 +1,5 @@
 
-#define DEBUG 0
-//if 0, trigger multi-thread automatically
 
-//#define BEZIER_TEST
-
-#define THREADS 8
 
 #include <iostream>  
 #include <opencv2/core/core.hpp>  
@@ -29,7 +24,12 @@ using namespace std;
 using namespace cv;
 
 
+#define DEBUG 0
+//if 0, trigger multi-thread automatically
 
+//#define BEZIER_TEST
+
+#define THREADS 8
 
 
 Mat img(RES, RES, CV_8UC3);
@@ -112,17 +112,17 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	vec3 back2(100000, -100000, -15);
 	vec3 back3(0, 200000, -15);
 
-	vec3 P(23, -2, 50);
-	vec3 Q(23, 10, 40);
-	vec3 R(23, 22, 50);
-	vec3 S(23, 10, 60);
-	vec3 T(10, 10, 50);
+	vec3 P(26, -2, 50);
+	vec3 Q(26, 10, 40);
+	vec3 R(26, 22, 50);
+	vec3 S(26, 10, 60);
+	vec3 T(13, 10, 50);
 
 	tex_face right;
 	tex_face2 front;
 
-	triangle s1(P, Q, R, 0, 0, 0);
-	triangle s2(Q, R, S, 0, 0, 0);
+	triangle s1(P, Q, R, 0, 0.63, 0.27, color(0.7, 1, 0.7), color(0.7, 1, 0.7));
+	triangle s2(Q, R, S, 0, 0.63, 0.27, color(0.7, 1, 0.7), color(0.7, 1, 0.7));
 	triangle s3(P, Q, T, 0, 0.63, 0.27, color(0.7, 1, 0.7), color(0.7, 1, 0.7));
 	triangle s4(Q, R, T, 0, 0.63, 0.27, color(0.7, 1, 0.7), color(0.7, 1, 0.7));
 	triangle s5(R, S, T, 0, 0.63, 0.27, color(0.7, 1, 0.7), color(0.7, 1, 0.7));
@@ -133,32 +133,28 @@ int main(int argc, char** argv) // argv[1]: thread_id    argv[2]: total number
 	triangle top(top1, top2, top3, 0, 0, 0.9, 1, 1);
 	
 	//floor 
-	triangle bot(bot1, bot2, bot3, 0, 0, 0.25, 1, color(1, 0.5, 0.7));
+	triangle bot(bot1, bot2, bot3, 0, 0.1, 0.25, 1, color(1, 0.7, 0.7));
 	
 	//left mirror
-	triangle left(left1, left2, left3, 0, 0.8, 0.16);
+	triangle left(left1, left2, left3, 0, 0.8, 0.13);
 
 	triangle back(back1, back2, back3, 0, 0, 0.9);
 
-	
-
-
-	ray r;
-	r.start = vec3(0, 0, 0);
-	r.direc = vec3(0, 0, 1);
+	bezier bez;
 	/*
-	for(int i=1; i<10; i++)
-		cout << front.diffuse(r).start << "   " << front.diffuse(r).direc << endl;
+	ray r;
+	r.setstart(0, 0, -12);
+	r.setdirec(0.3, 0, 1);
 
-	int xx;
-	cin >> xx;
+	cout<<bez.findcross(r)<<endl<<bez.reflect(r).direc<<endl;
+	system("pause");
 	*/
+	scn.add_shape(&bez);
 
 	scn.add_shape(&b1);
 	scn.add_shape(&b2);
 	scn.add_shape(&light);
-
-
+	
 	scn.add_shape(&s1);
 	scn.add_shape(&s2);
 	scn.add_shape(&s3);

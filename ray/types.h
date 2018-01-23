@@ -1,20 +1,7 @@
 #ifndef WIKU_TYPES
 #define WIKU_TYPES
 
-#define HI_RES 1
-
-#if HI_RES
-#define RES 600
-#define PRECISION 1500
-
-#else
-
-#define RES 240
-#define PRECISION 469
-
-#endif
-
-#define ITER_DEPTH 40
+#include "precision.h"
 
 
 #include <opencv2/core/core.hpp>  
